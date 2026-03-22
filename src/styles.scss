@@ -1,0 +1,218 @@
+/* Глобальные стили и сброс */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0f0f1a;
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, rgba(30, 30, 50, 0.5), rgba(20, 20, 40, 0.5));
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  border-radius: 5px;
+
+  &:hover {
+    background: linear-gradient(180deg, #8b5cf6, #a78bfa);
+  }
+}
+
+/* Выделение текста */
+::selection {
+  background: rgba(99, 102, 241, 0.5);
+  color: #fff;
+}
+
+::-moz-selection {
+  background: rgba(99, 102, 241, 0.5);
+  color: #fff;
+}
+
+/* Анимация появления страницы */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  animation: pageEnter 0.5s ease-out;
+}
+
+/* Эффект свечения для фокуса */
+:focus-visible {
+  outline: 2px solid rgba(165, 180, 252, 0.8);
+  outline-offset: 2px;
+}
+
+/* Убираем стандартные стили кнопок */
+button {
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Плавная прокрутка */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Анимация частиц на фоне */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+/* Добавляем звёздный фон */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Глитч-эффект для заголовков */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 rgba(255, 0, 0, 0.5), -2px 0 rgba(0, 255, 255, 0.5);
+  }
+  25% {
+    text-shadow: -2px 0 rgba(255, 0, 0, 0.5), 2px 0 rgba(0, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 2px 0 rgba(0, 255, 255, 0.5), -2px 0 rgba(255, 0, 0, 0.5);
+  }
+  75% {
+    text-shadow: -2px 0 rgba(0, 255, 255, 0.5), 2px 0 rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    text-shadow: 2px 0 rgba(255, 0, 0, 0.5), -2px 0 rgba(0, 255, 255, 0.5);
+  }
+}
+
+/* Неоновое свечение */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5),
+                0 0 20px rgba(99, 102, 241, 0.3),
+                0 0 30px rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.8),
+                0 0 30px rgba(99, 102, 241, 0.5),
+                0 0 40px rgba(99, 102, 241, 0.3);
+  }
+}
+
+/* Вращение */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Пульсация */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* Мерцание */
+@keyframes shimmer {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* Градиентная анимация */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Падение */
+@keyframes dropIn {
+  from {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Прыжок */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Увеличение */
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

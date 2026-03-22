@@ -1,0 +1,155 @@
+<div class="app-container" [@fadeInOut]>
+  <!-- Header с анимацией -->
+  <header class="header" [@slideInLeft]>
+    <div class="header-content">
+      <div class="logo-container" [@bounceIn] (mouseenter)="isHovering.set(true)" (mouseleave)="isHovering.set(false)">
+        <span class="logo-icon" [@pulse]="isHovering() ? 'pulsing' : 'normal'">📝</span>
+        <h1 class="app-title">{{ title }}</h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Поиск -->
+        <div class="search-container" [@slideInUp]>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Поиск заметок..."
+            [(ngModel)]="searchQuery"
+          />
+          @if (searchQuery()) {
+            <button class="clear-search" (click)="clearSearch()" [@fadeInOut]>×</button>
+          }
+        </div>
+
+        <!-- Кнопка создания -->
+        <button class="create-btn" (click)="openEditor()" [@bounceIn]>
+          <span class="btn-icon">+</span>
+          <span>Новая заметка</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Статистика -->
+    <div class="stats-bar" [@slideInUp]>
+      <div class="stat-item">
+        <span class="stat-value">{{ stats().total }}</span>
+        <span class="stat-label">Всего</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ stats().pinned }}</span>
+        <span class="stat-label">Закреплено</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ stats().withTags }}</span>
+        <span class="stat-label">С тегами</span>
+      </div>
+    </div>
+
+    <!-- Теги -->
+    @if (allTags().length > 0) {
+      <div class="tags-bar" [@slideInUp]>
+        <button
+          class="tag-chip"
+          [class.active]="selectedTag() === null"
+          (click)="selectTag(null)"
+        >
+          Все
+        </button>
+        @for (tag of allTags(); track tag) {
+          <button
+            class="tag-chip"
+            [class.active]="selectedTag() === tag"
+            (click)="selectTag(tag)"
+            [@fadeInOut]
+          >
+            #{{ tag }}
+          </button>
+        }
+      </div>
+    }
+  </header>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <!-- Закреплённые заметки -->
+    @if (filteredPinnedNotes().length > 0) {
+      <section class="notes-section" [@listAnimation]>
+        <h2 class="section-title">
+          <span class="pin-icon">📌</span>
+          Закреплённые
+        </h2>
+        <div class="notes-grid">
+          @for (note of filteredPinnedNotes(); track note.id) {
+            <app-note-card
+              [note]="note"
+              [@fadeInOut]
+              (view)="viewNote(note)"
+              (edit)="openEditor(note)"
+              (delete)="deleteNote(note)"
+              (togglePin)="togglePin(note)"
+            />
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Обычные заметки -->
+    <section class="notes-section" [@listAnimation]>
+      @if (filteredRegularNotes().length > 0) {
+        <h2 class="section-title">
+          <span class="notes-icon">📋</span>
+          Все заметки
+        </h2>
+        <div class="notes-grid">
+          @for (note of filteredRegularNotes(); track note.id) {
+            <app-note-card
+              [note]="note"
+              [@fadeInOut]
+              (view)="viewNote(note)"
+              (edit)="openEditor(note)"
+              (delete)="deleteNote(note)"
+              (togglePin)="togglePin(note)"
+            />
+          }
+        </div>
+      } @else if (filteredPinnedNotes().length === 0) {
+        <!-- Пустое состояние -->
+        <div class="empty-state" [@bounceIn]>
+          <div class="empty-icon">✨</div>
+          <h3>Нет заметок</h3>
+          <p>Создайте первую заметку, нажав на кнопку выше</p>
+          <button class="create-hint-btn" (click)="openEditor()">
+            Создать заметку
+          </button>
+        </div>
+      }
+    </section>
+  </main>
+
+  <!-- Модальное окно редактора -->
+  @if (isEditorOpen()) {
+    <app-note-editor-modal
+      [note]="editingNote()"
+      (close)="closeEditor()"
+      (saveNote)="saveNote($event.title, $event.content, $event.color, $event.tags)"
+      [@fadeInOut]
+    />
+  }
+
+  <!-- Модальное окно просмотра -->
+  @if (isViewOpen() && viewingNote()) {
+    <app-note-view-modal
+      [note]="viewingNote()!"
+      (close)="closeView()"
+      (edit)="openEditor(viewingNote()!)"
+      (delete)="deleteNote(viewingNote()!); closeView()"
+      (togglePin)="togglePin(viewingNote()!)"
+      [@fadeInOut]
+    />
+  }
+
+  <!-- Плавающая кнопка -->
+  <button class="fab" (click)="openEditor()" [@pulse]="isHovering() ? 'pulsing' : 'normal'">
+    <span>+</span>
+  </button>
+</div>
